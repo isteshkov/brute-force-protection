@@ -1,0 +1,59 @@
+syntax = "proto3";
+package contract;
+option go_package = "../contract";
+
+service Protector {
+  rpc AuthAttempt(RequestAuthAttempt)returns(ResponseAuthAttempt){}
+
+  rpc CleanBucketByLogin(RequestCleanBucketByLogin)returns(ResponseCleanBucketByLogin){}
+  rpc CleanBucketByIp(RequestCleanBucketByIp)returns(ResponseCleanBucketByIp){}
+
+  rpc AddToBlackList(RequestAddToList)returns(ResponseAddToList){}
+  rpc RemoveFromBlackList(RequestRemoveFromList)returns(ResponseRemoveFromList){}
+
+  rpc AddToWhiteList(RequestAddToList)returns(ResponseAddToList){}
+  rpc RemoveFromWhiteList(RequestRemoveFromList)returns(ResponseRemoveFromList){}
+}
+
+message RequestAuthAttempt {
+  string Login = 1;
+  string Password = 2;
+  string IpAddress = 3;
+}
+
+message ResponseAuthAttempt {
+  bool Allowed = 1;
+  string ErrorMsg = 2;
+}
+
+message RequestCleanBucketByLogin {
+  string Login = 1;
+}
+
+message ResponseCleanBucketByLogin {
+  string ErrorMsg = 1;
+}
+
+message RequestCleanBucketByIp {
+  string IpAddress = 1;
+}
+
+message ResponseCleanBucketByIp {
+  string ErrorMsg = 1;
+}
+
+message RequestAddToList {
+  string SubnetAddress = 1;
+}
+
+message ResponseAddToList {
+  string ErrorMsg = 1;
+}
+
+message RequestRemoveFromList {
+  string SubnetAddress = 1;
+}
+
+message ResponseRemoveFromList {
+  string ErrorMsg = 1;
+}
