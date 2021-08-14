@@ -10,16 +10,18 @@ import (
 
 	"gitlab.com/isteshkov/brute-force-protection/domain/errors"
 	"gitlab.com/isteshkov/brute-force-protection/domain/logging"
+	"gitlab.com/isteshkov/brute-force-protection/repositories"
 
 	"google.golang.org/grpc"
 )
 
 var errorProducer = errors.NewProducer("GENERAL_ERROR")
 
-func NewService(config *Config, l logging.Logger) *Service {
+func NewService(config *Config, subnetsRepo repositories.Subnets, l logging.Logger) *Service {
 	service := &Service{
-		Logger: l,
-		cfg:    config,
+		Logger:            l,
+		cfg:               config,
+		subnetsRepository: subnetsRepo,
 	}
 
 	service.rpcListener = newRpc(service)
@@ -34,6 +36,8 @@ type Service struct {
 	rpcListener  *grpc.Server
 	technicalApi API
 	profilingApi API
+
+	subnetsRepository repositories.Subnets
 }
 
 func (s *Service) SetLogger(l logging.Logger) {

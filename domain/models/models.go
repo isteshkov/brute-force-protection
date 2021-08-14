@@ -1,9 +1,8 @@
-package domain
+package models
 
 import "time"
 
 type GeneralTechFields struct {
-	Uid       string
 	Version   int
 	CreatedAt time.Time
 	UpdatedAt time.Time
