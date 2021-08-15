@@ -20,7 +20,8 @@ jobs:
 
       - name: GolangCI-Linter
         uses: Mushus/golangci-linter@v1.1.2
-        run: make lint
+        with:
+          config: .golangci.yml
 
       - name: Build
         run: go build -v ./...
