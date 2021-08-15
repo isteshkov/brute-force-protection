@@ -1,5 +1,6 @@
 .PHONY: lint
 lint:
+	go get -u golang.org/x/lint/golint
 	golangci-lint run
 
 .PHONY: run
