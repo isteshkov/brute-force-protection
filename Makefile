@@ -1,6 +1,6 @@
 .PHONY: run
 run:
-
+	sudo docker-compose up --build
 
 .PHONY: deps
 deps:
@@ -11,9 +11,9 @@ deps:
 build:
 	go build -o brute_force_protection .
 
-.PHONY: tests
-tests:
-
+.PHONY: test
+test:
+	go test -count=1 ./...
 
 .PHONY: proto
 proto:
