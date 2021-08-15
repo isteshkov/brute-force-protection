@@ -1,3 +1,7 @@
+.PHONY: lint
+lint:
+	golangci-lint run
+
 .PHONY: run
 run:
 	sudo docker-compose up --build
