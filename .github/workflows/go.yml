@@ -8,23 +8,6 @@ on:
 
 jobs:
 
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: 1.16
-
-      - name: Check out code
-        uses: actions/checkout@v2
-
-      - name: Lint Go Code
-        run: |
-          go get -u golang.org/x/lint/golint
-          $(go env GOPATH)/bin/golangci-lint run
-
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -35,6 +18,13 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: 1.16
+        id: go
+
+      - name: Install golangci-lint
+        run: curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b $(go env GOPATH)/bin v1.41.1
+
+      - name: Run golangci-lint
+        run: $(go env GOPATH)/bin/golangci-lint run
 
       - name: Build
         run: make build
