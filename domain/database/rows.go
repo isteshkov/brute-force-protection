@@ -49,7 +49,6 @@ func (r *Rows) Close() (err error) {
 func (r *Rows) Next() bool {
 	if r.rows != nil {
 		return r.rows.Next()
-	} else {
-		return false
 	}
+	return false
 }

@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	_ "github.com/lib/pq"
 	"gitlab.com/isteshkov/brute-force-protection/config"
 	"gitlab.com/isteshkov/brute-force-protection/domain/database"
 	"gitlab.com/isteshkov/brute-force-protection/domain/logging"
@@ -13,7 +14,6 @@ import (
 )
 
 func main() {
-
 	file := ""
 	args := os.Args[1:]
 	if len(args) > 0 {
@@ -27,7 +27,7 @@ func main() {
 	}
 
 	if len(args) > 1 && args[1] == "migrate" {
-		err = migrations.MigrateUp(cfg.DatabaseUrl)
+		err = migrations.MigrateUp(cfg.DatabaseURL)
 		if err != nil {
 			panic(err)
 		}
@@ -36,8 +36,8 @@ func main() {
 
 	logger, err := logging.NewLogger(&logging.Config{
 		LogLvl:        cfg.LogLevel,
-		InstanceId:    cfg.InstanceId,
-		ContainerId:   cfg.ContainerId,
+		InstanceID:    cfg.InstanceID,
+		ContainerID:   cfg.ContainerID,
 		ContainerName: cfg.ContainerName,
 		EnvName:       cfg.EnvName,
 		Version:       cfg.Version,
@@ -49,7 +49,7 @@ func main() {
 		panic(err)
 	}
 
-	db, err := database.GetDatabase(database.Config{DatabaseURL: cfg.DatabaseUrl}, logger)
+	db, err := database.GetDatabase(database.Config{DatabaseURL: cfg.DatabaseURL}, logger)
 	if err != nil {
 		panic(err)
 	}
@@ -57,9 +57,9 @@ func main() {
 	subnetsRepository := repositories.NewSubnetListRepository(db, logger)
 
 	server := service.NewService(&service.Config{
-		ProfilingApiPort: cfg.ProfilingApiPort,
-		TechnicalApiPort: cfg.TechnicalApiPort,
-		RpcPort:          cfg.RpcPort,
+		ProfilingAPIPort: cfg.ProfilingAPIPort,
+		TechnicalAPIPort: cfg.TechnicalAPIPort,
+		RPCPort:          cfg.RPCPort,
 	}, subnetsRepository, logger)
 
 	server.ListenAndServe()

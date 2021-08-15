@@ -1,3 +1,3 @@
 package contract
 
-const RequestIdHeader = "X-Request-Id"
+const RequestIDHeader = "X-Request-Id"

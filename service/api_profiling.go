@@ -9,7 +9,7 @@ import (
 
 const ProfilingUrn = "/profiling"
 
-func buildProfilingApi() API {
+func buildProfilingAPI() API {
 	router := gin.New()
 	router.GET(ProfilingUrn, wrapPprofHandler)
 	return router

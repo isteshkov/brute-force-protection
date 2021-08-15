@@ -2,11 +2,11 @@ package service
 
 import (
 	"gitlab.com/isteshkov/brute-force-protection/domain/errors"
-	"gitlab.com/isteshkov/brute-force-protection/error_codes"
+	"gitlab.com/isteshkov/brute-force-protection/errorcodes"
 )
 
 var (
-	ErrorProducerGeneral = errors.NewProducer(error_codes.CodeGeneral)
+	ErrorProducerGeneral = errors.NewProducer(errorcodes.CodeGeneral)
 
 	ErrorsList = []*errors.ErrorProducer{
 		ErrorProducerGeneral,
@@ -25,10 +25,9 @@ func processError(errPtr *error) {
 	}
 
 	*errPtr = ErrorProducerGeneral.Wrap(err)
-	return
 }
 
-func (s *Service) processRpcError(errPtr *error, errField *string) {
+func (s *Service) processRPCError(errPtr *error, errField *string) {
 	if errPtr == nil || *errPtr == nil {
 		return
 	}
@@ -37,12 +36,8 @@ func (s *Service) processRpcError(errPtr *error, errField *string) {
 		*errPtr = nil
 	}()
 
-	*errField = error_codes.CodeGeneral
+	*errField = errorcodes.CodeGeneral
 	if err, ok := (*errPtr).(errors.HasType); ok {
-		if !ok {
-			return
-		}
-
 		if withCode, ok := err.(errors.HasCode); ok {
 			if withCode.Code() != "" {
 				*errField = withCode.Code()

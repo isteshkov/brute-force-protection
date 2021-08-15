@@ -5,11 +5,10 @@ import (
 	"log"
 	"os"
 
-	"gitlab.com/isteshkov/brute-force-protection/domain/errors"
-	"gitlab.com/isteshkov/brute-force-protection/domain/logging"
-
 	"github.com/caarlos0/env"
 	"github.com/joho/godotenv"
+	"gitlab.com/isteshkov/brute-force-protection/domain/errors"
+	"gitlab.com/isteshkov/brute-force-protection/domain/logging"
 )
 
 const (
@@ -22,29 +21,32 @@ var ErrorProducerLoading = errors.NewProducer("LOADING_ERROR")
 
 type Config struct {
 	ServiceName   string `env:"SERVICE_NAME"`
-	InstanceId    string `env:"INSTANCE_ID"`
-	ContainerId   string `env:"CONTAINER_ID"`
+	InstanceID    string `env:"INSTANCE_ID"`
+	ContainerID   string `env:"CONTAINER_ID"`
 	ContainerName string `env:"CONTAINER_NAME"`
 	EnvName       string `env:"ENV_NAME"`
 	Version       string `env:"VERSION"`
 	Release       string `env:"RELEASE"`
 	CommitSha     string `env:"COMMIT_SHA"`
 
-	RpcPort          string `env:"RPC_PORT,required"`
-	TechnicalApiPort string `env:"TECHNICAL_API_PORT"`
-	ProfilingApiPort string `env:"PROFILING_API_PORT"`
+	RPCPort          string `env:"RPC_PORT,required"`
+	TechnicalAPIPort string `env:"TECHNICAL_API_PORT"`
+	ProfilingAPIPort string `env:"PROFILING_API_PORT"`
 	LogLevel         string `env:"LOG_LEVEL"`
-	DatabaseUrl      string `env:"DATABASE_URL,required"`
+	DatabaseURL      string `env:"DATABASE_URL,required"`
 }
 
-func LoadConfig(fileName ...string) (cfg *Config, err error) {
-	if len(fileName) == 1 {
-		err = loadEnvFromFile(fileName[0])
-	}
+func LoadConfig(fileName string) (cfg *Config, err error) {
 	cfg = &Config{}
-	err = env.Parse(cfg)
-	if err != nil {
-		return
+
+	if len(fileName) > 0 {
+		err = loadEnvFromFile(fileName)
+		if err != nil {
+			err = env.Parse(cfg)
+			if err != nil {
+				return
+			}
+		}
 	}
 
 	fillDefault(cfg)
@@ -69,11 +71,11 @@ func fillDefault(cfg *Config) {
 	if cfg.ServiceName == "" {
 		cfg.ServiceName = DefaultServiceName
 	}
-	if cfg.ProfilingApiPort == "" {
-		cfg.ProfilingApiPort = DefaultProfilingPort
+	if cfg.ProfilingAPIPort == "" {
+		cfg.ProfilingAPIPort = DefaultProfilingPort
 	}
-	if cfg.TechnicalApiPort == "" {
-		cfg.TechnicalApiPort = DefaultTechnicalPort
+	if cfg.TechnicalAPIPort == "" {
+		cfg.TechnicalAPIPort = DefaultTechnicalPort
 	}
 	if cfg.LogLevel == "" {
 		cfg.LogLevel = logging.LevelDebug

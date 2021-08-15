@@ -6,14 +6,14 @@ import (
 	"strconv"
 	"sync"
 
-	"gitlab.com/isteshkov/brute-force-protection/domain/logging"
-
 	"github.com/jmoiron/sqlx"
-	_ "github.com/lib/pq"
+	"gitlab.com/isteshkov/brute-force-protection/domain/logging"
 )
 
-var mu sync.Mutex
-var sqlDb *sql.DB
+var (
+	mu    sync.Mutex
+	sqlDB *sql.DB
+)
 
 func GetDatabase(config Config, l logging.Logger) (result *sqlDatabase, err error) {
 	defer processError(&err)
@@ -21,24 +21,24 @@ func GetDatabase(config Config, l logging.Logger) (result *sqlDatabase, err erro
 	mu.Lock()
 	defer mu.Unlock()
 
-	if sqlDb == nil {
+	if sqlDB == nil {
 		_db, err := sql.Open("postgres", config.DatabaseURL)
 		if err != nil {
 			return nil, err
 		}
-		sqlDb = _db
+		sqlDB = _db
 	}
 
 	result = &sqlDatabase{
-		client:    sqlDb,
-		newClient: sqlx.NewDb(sqlDb, "postgres"),
+		client:    sqlDB,
+		newClient: sqlx.NewDb(sqlDB, "postgres"),
 		logger:    l,
 	}
 
 	return
 }
 
-func NewSqlTransaction(db Database, l logging.Logger) (result *sqlTransaction, err error) {
+func NewSQLTransaction(db Database, l logging.Logger) (result *sqlTransaction, err error) {
 	defer processError(&err)
 
 	tx, err := db.Begin()
@@ -54,7 +54,7 @@ func GetWithTx(db Database, withTx Transaction, l logging.Logger) (tx Transactio
 	defer processError(&err)
 
 	if withTx == nil || !withTx.IsInitialized() {
-		tx, err = NewSqlTransaction(db, l)
+		tx, err = NewSQLTransaction(db, l)
 		if err != nil {
 			return
 		}

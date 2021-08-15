@@ -26,15 +26,6 @@ func IsProducedBy(err error, reasons ...*ErrorProducer) bool {
 	return false
 }
 
-func GetCode(err error) string {
-	switch err.(type) {
-	case interface{ Code() string }:
-		return err.(interface{ Code() string }).Code()
-	default:
-		return ErrorCodeGeneral
-	}
-}
-
 type ErrorProducer struct {
 	producingType string
 }
@@ -70,7 +61,7 @@ func (e *ErrorProducer) WrapF(err error, message string, lvl ...int) *baseError 
 	}
 
 	return &baseError{
-		msg:      fmt.Sprintf(message),
+		msg:      fmt.Sprint(message),
 		typ:      e.producingType,
 		stack:    getStackTrace(level),
 		origin:   err,

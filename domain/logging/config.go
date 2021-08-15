@@ -10,8 +10,8 @@ const (
 
 type Config struct {
 	LogLvl        string
-	InstanceId    string
-	ContainerId   string
+	InstanceID    string
+	ContainerID   string
 	ContainerName string
 	EnvName       string
 	Version       string

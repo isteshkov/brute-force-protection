@@ -16,7 +16,7 @@ type API interface {
 	Run(address ...string) error
 }
 
-func buildMetricsApi(s *Service) API {
+func buildMetricsAPI(s *Service) API {
 	router := gin.New()
 	router.GET(MetricsUrn, wrapPromHandler)
 	router.GET(HealthUrn, s.healthHandler)
@@ -29,5 +29,4 @@ func wrapPromHandler(c *gin.Context) {
 
 func (s *Service) healthHandler(c *gin.Context) {
 	c.AbortWithStatus(http.StatusOK)
-	return
 }

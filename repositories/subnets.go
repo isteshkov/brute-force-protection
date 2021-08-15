@@ -43,7 +43,8 @@ func (s subnetListRepository) WithLogger(l logging.Logger) Subnets {
 	return &s
 }
 
-func (s subnetListRepository) Set(subnet models.Subnet, withTx database.Transaction) (tx database.Transaction, err error) {
+func (s subnetListRepository) Set(
+	subnet models.Subnet, withTx database.Transaction) (tx database.Transaction, err error) {
 	defer processError(&err)
 
 	tx, err = database.GetWithTx(s.db, withTx, s.l)
@@ -82,7 +83,10 @@ func (s subnetListRepository) Set(subnet models.Subnet, withTx database.Transact
 	return
 }
 
-func (s subnetListRepository) SetDeleted(subnet models.Subnet, deletedAt time.Time, withTx database.Transaction) (tx database.Transaction, err error) {
+func (s subnetListRepository) SetDeleted(
+	subnet models.Subnet,
+	deletedAt time.Time,
+	withTx database.Transaction) (tx database.Transaction, err error) {
 	defer processError(&err)
 
 	tx, err = database.GetWithTx(s.db, withTx, s.l)

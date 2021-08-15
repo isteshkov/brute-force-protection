@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"gitlab.com/isteshkov/brute-force-protection/domain/common"
-
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -28,8 +27,8 @@ func NewLogger(c *Config) (Logger, error) {
 	}
 
 	fields := map[string]interface{}{
-		"instance_id":    c.InstanceId,
-		"container_id":   c.ContainerId,
+		"instance_id":    c.InstanceID,
+		"container_id":   c.ContainerID,
 		"container_name": c.ContainerName,
 		"env_name":       c.EnvName,
 		"version":        c.Version,

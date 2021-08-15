@@ -2,6 +2,6 @@ package context
 
 const (
 	KeyLogFields      = "log_fields"
-	KeyRequestId      = "request_id"
-	KeyRequestUserUid = "request_user_uid"
+	KeyRequestID      = "request_id"
+	KeyRequestUserUID = "request_user_uid"
 )

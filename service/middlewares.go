@@ -9,28 +9,28 @@ import (
 	"gitlab.com/isteshkov/brute-force-protection/domain/common"
 	myContext "gitlab.com/isteshkov/brute-force-protection/domain/context"
 	"gitlab.com/isteshkov/brute-force-protection/domain/contract"
-
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 )
 
-func (s *Service) MiddlewareAccess(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
-	requestId := common.NewUUIDv4()
+func (s *Service) MiddlewareAccess(ctx context.Context, req interface{},
+	info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
+	requestID := common.NewUUIDv4()
 	meta, ok := metadata.FromIncomingContext(ctx)
 	if ok {
-		IncomingRequestId := meta.Get(contract.RequestIdHeader)
-		if len(IncomingRequestId) > 0 {
-			requestId = IncomingRequestId[0]
+		IncomingRequestID := meta.Get(contract.RequestIDHeader)
+		if len(IncomingRequestID) > 0 {
+			requestID = IncomingRequestID[0]
 		}
 	}
 
 	path := info.FullMethod
 	generalLoggerFields := map[string]interface{}{
 		"path":       path,
-		"request_id": requestId,
+		"request_id": requestID,
 	}
 
-	meta.Append(myContext.KeyRequestId, requestId)
+	meta.Append(myContext.KeyRequestID, requestID)
 	ctx = metadata.NewOutgoingContext(ctx, meta)
 
 	logger := s.Logger.WithFields(generalLoggerFields)
@@ -64,7 +64,8 @@ func (s *Service) MiddlewareAccess(ctx context.Context, req interface{}, info *g
 	return result, err
 }
 
-func (s *Service) RecoveryMiddleware(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
+func (s *Service) RecoveryMiddleware(ctx context.Context, req interface{},
+	info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
 	logger := s.Logger.WithFields(myContext.LogFieldsFromGrpcContext(ctx))
 	defer func() {
 		panicInfo := recover()
@@ -76,7 +77,6 @@ func (s *Service) RecoveryMiddleware(ctx context.Context, req interface{}, info 
 				}).Fatal("panic recovered")
 			err = ErrorProducerGeneral.New("%+v", panicInfo)
 		}
-		return
 	}()
 
 	result, err := handler(ctx, req)

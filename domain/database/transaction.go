@@ -23,12 +23,10 @@ type Transaction interface {
 }
 
 type sqlTransaction struct {
-	l            logging.Logger
-	tx           *sql.Tx
-	err          error
-	queryCounter uint
-	OnCommit     func() error
-	OnRollback   func() error
+	l          logging.Logger
+	tx         *sql.Tx
+	OnCommit   func() error
+	OnRollback func() error
 }
 
 func (t sqlTransaction) WithLogger(l logging.Logger) Transaction {

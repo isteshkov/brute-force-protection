@@ -5,7 +5,7 @@ const (
 	FieldKeyError      = "error"
 	FieldKeyTime       = "time_utc"
 	FieldKeyMessage    = "message"
-	FieldKeyRequestId  = "request_id"
+	FieldKeyRequestID  = "request_id"
 	FieldKeyStacktrace = "stacktrace"
 
 	LevelDebug   = "DEBUG"

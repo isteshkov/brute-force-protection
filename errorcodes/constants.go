@@ -1,4 +1,4 @@
-package error_codes
+package errorcodes
 
 const CodeGeneral = "BRUTE_FORCE_GENERAL_ERROR"
 

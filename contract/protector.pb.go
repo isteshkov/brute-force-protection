@@ -629,14 +629,14 @@ var file_contract_protector_proto_goTypes = []interface{}{
 var file_contract_protector_proto_depIdxs = []int32{
 	0, // 0: contract.Protector.AuthAttempt:input_type -> contract.RequestAuthAttempt
 	2, // 1: contract.Protector.CleanBucketByLogin:input_type -> contract.RequestCleanBucketByLogin
-	4, // 2: contract.Protector.CleanBucketByIp:input_type -> contract.RequestCleanBucketByIp
+	4, // 2: contract.Protector.CleanBucketByIP:input_type -> contract.RequestCleanBucketByIp
 	6, // 3: contract.Protector.AddToBlackList:input_type -> contract.RequestAddToList
 	8, // 4: contract.Protector.RemoveFromBlackList:input_type -> contract.RequestRemoveFromList
 	6, // 5: contract.Protector.AddToWhiteList:input_type -> contract.RequestAddToList
 	8, // 6: contract.Protector.RemoveFromWhiteList:input_type -> contract.RequestRemoveFromList
 	1, // 7: contract.Protector.AuthAttempt:output_type -> contract.ResponseAuthAttempt
 	3, // 8: contract.Protector.CleanBucketByLogin:output_type -> contract.ResponseCleanBucketByLogin
-	5, // 9: contract.Protector.CleanBucketByIp:output_type -> contract.ResponseCleanBucketByIp
+	5, // 9: contract.Protector.CleanBucketByIP:output_type -> contract.ResponseCleanBucketByIp
 	7, // 10: contract.Protector.AddToBlackList:output_type -> contract.ResponseAddToList
 	9, // 11: contract.Protector.RemoveFromBlackList:output_type -> contract.ResponseRemoveFromList
 	7, // 12: contract.Protector.AddToWhiteList:output_type -> contract.ResponseAddToList

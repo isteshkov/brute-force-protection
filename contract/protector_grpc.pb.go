@@ -55,7 +55,7 @@ func (c *protectorClient) CleanBucketByLogin(ctx context.Context, in *RequestCle
 
 func (c *protectorClient) CleanBucketByIp(ctx context.Context, in *RequestCleanBucketByIp, opts ...grpc.CallOption) (*ResponseCleanBucketByIp, error) {
 	out := new(ResponseCleanBucketByIp)
-	err := c.cc.Invoke(ctx, "/contract.Protector/CleanBucketByIp", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/contract.Protector/CleanBucketByIP", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +104,7 @@ func (c *protectorClient) RemoveFromWhiteList(ctx context.Context, in *RequestRe
 type ProtectorServer interface {
 	AuthAttempt(context.Context, *RequestAuthAttempt) (*ResponseAuthAttempt, error)
 	CleanBucketByLogin(context.Context, *RequestCleanBucketByLogin) (*ResponseCleanBucketByLogin, error)
-	CleanBucketByIp(context.Context, *RequestCleanBucketByIp) (*ResponseCleanBucketByIp, error)
+	CleanBucketByIP(context.Context, *RequestCleanBucketByIp) (*ResponseCleanBucketByIp, error)
 	AddToBlackList(context.Context, *RequestAddToList) (*ResponseAddToList, error)
 	RemoveFromBlackList(context.Context, *RequestRemoveFromList) (*ResponseRemoveFromList, error)
 	AddToWhiteList(context.Context, *RequestAddToList) (*ResponseAddToList, error)
@@ -121,8 +121,8 @@ func (UnimplementedProtectorServer) AuthAttempt(context.Context, *RequestAuthAtt
 func (UnimplementedProtectorServer) CleanBucketByLogin(context.Context, *RequestCleanBucketByLogin) (*ResponseCleanBucketByLogin, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CleanBucketByLogin not implemented")
 }
-func (UnimplementedProtectorServer) CleanBucketByIp(context.Context, *RequestCleanBucketByIp) (*ResponseCleanBucketByIp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CleanBucketByIp not implemented")
+func (UnimplementedProtectorServer) CleanBucketByIP(context.Context, *RequestCleanBucketByIp) (*ResponseCleanBucketByIp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CleanBucketByIP not implemented")
 }
 func (UnimplementedProtectorServer) AddToBlackList(context.Context, *RequestAddToList) (*ResponseAddToList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddToBlackList not implemented")
@@ -190,14 +190,14 @@ func _Protector_CleanBucketByIp_Handler(srv interface{}, ctx context.Context, de
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProtectorServer).CleanBucketByIp(ctx, in)
+		return srv.(ProtectorServer).CleanBucketByIP(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/contract.Protector/CleanBucketByIp",
+		FullMethod: "/contract.Protector/CleanBucketByIP",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProtectorServer).CleanBucketByIp(ctx, req.(*RequestCleanBucketByIp))
+		return srv.(ProtectorServer).CleanBucketByIP(ctx, req.(*RequestCleanBucketByIp))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -290,7 +290,7 @@ var Protector_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Protector_CleanBucketByLogin_Handler,
 		},
 		{
-			MethodName: "CleanBucketByIp",
+			MethodName: "CleanBucketByIP",
 			Handler:    _Protector_CleanBucketByIp_Handler,
 		},
 		{

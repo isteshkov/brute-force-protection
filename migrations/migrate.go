@@ -3,22 +3,20 @@ package migrations
 import (
 	"fmt"
 
+	"github.com/gobuffalo/packr"
+	"github.com/rubenv/sql-migrate"
 	"gitlab.com/isteshkov/brute-force-protection/domain/database"
 	"gitlab.com/isteshkov/brute-force-protection/domain/logging"
-
-	"github.com/gobuffalo/packr"
-	_ "github.com/lib/pq"
-	"github.com/rubenv/sql-migrate"
 )
 
-func MigrateUp(dbUrl string) (err error) {
+func MigrateUp(dbURL string) (err error) {
 	l, err := logging.NewLogger(&logging.Config{LogLvl: logging.LevelError})
 	if err != nil {
 		return
 	}
 
 	db, err := database.GetDatabase(database.Config{
-		DatabaseURL: dbUrl,
+		DatabaseURL: dbURL,
 	}, l)
 	if err != nil {
 		return
@@ -37,14 +35,14 @@ func MigrateUp(dbUrl string) (err error) {
 	return nil
 }
 
-func MigrateDown(dbUrl string) (err error) {
+func MigrateDown(dbURL string) (err error) {
 	l, err := logging.NewLogger(&logging.Config{LogLvl: logging.LevelError})
 	if err != nil {
 		return
 	}
 
 	db, err := database.GetDatabase(database.Config{
-		DatabaseURL: dbUrl,
+		DatabaseURL: dbURL,
 	}, l)
 	if err != nil {
 		return

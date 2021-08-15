@@ -3,9 +3,8 @@ package database
 import (
 	"database/sql"
 
-	"gitlab.com/isteshkov/brute-force-protection/domain/errors"
-
 	"github.com/lib/pq"
+	"gitlab.com/isteshkov/brute-force-protection/domain/errors"
 )
 
 var (
@@ -33,9 +32,8 @@ func processError(errPtr *error) {
 	}
 
 	if pqErr, ok := err.(*pq.Error); ok {
-		switch pqErr.Code {
-		//pq errors code corresponding duplicate primary key
-		case "23505":
+		// pq errors code corresponding duplicate primary key
+		if pqErr.Code == "23505" {
 			*errPtr = ErrorProducerAlreadyExist.Wrap(err, 1)
 			return
 		}
@@ -47,5 +45,4 @@ func processError(errPtr *error) {
 	}
 
 	*errPtr = ErrorProducerGeneral.Wrap(err, 1)
-	return
 }

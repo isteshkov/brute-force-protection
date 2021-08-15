@@ -34,14 +34,6 @@ func (b *baseError) Type() string {
 	return b.typ
 }
 
-func (b *baseError) getOrigin() error {
-	return b.origin
-}
-
-func (b *baseError) getProducer() *ErrorProducer {
-	return b.producer
-}
-
 func (b *baseError) getPrettyStack() string {
 	result := "\n"
 	space := ""
@@ -71,9 +63,8 @@ func (b *baseError) ErrorMessage() string {
 	default:
 		if b.origin != nil {
 			return b.origin.Error()
-		} else {
-			return b.msg
 		}
+		return b.msg
 	}
 }
 

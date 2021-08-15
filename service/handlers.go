@@ -16,7 +16,7 @@ func (s *Service) cleanBucketByLogin(login string) (err error) {
 	return
 }
 
-func (s *Service) cleanBucketByIp(ip string) (err error) {
+func (s *Service) cleanBucketByIP(ip string) (err error) {
 	defer processError(&err)
 
 	// business logic here
