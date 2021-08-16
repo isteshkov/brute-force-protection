@@ -34,12 +34,13 @@ func (t sqlTransaction) WithLogger(l logging.Logger) Transaction {
 	return &t
 }
 
+//nolint:sqlclosecheck
 func (t *sqlTransaction) Query(query string, args ...interface{}) (rows *Rows, err error) {
 	defer processError(&err)
 
 	tsBeforeRequest := time.Now().UTC()
 	sqlRows, err := t.tx.Query(query, args...)
-	if err != nil {
+	if err != nil || sqlRows.Err() != nil {
 		return
 	}
 
@@ -112,6 +113,7 @@ func (t *sqlTransaction) Exec(query string, args ...interface{}) (result sql.Res
 	return
 }
 
+//nolint:sqlclosecheck
 func (t *sqlTransaction) Prepare(query string) (result *Stmt, err error) {
 	defer processError(&err)
 

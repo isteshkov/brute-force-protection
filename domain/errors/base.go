@@ -4,6 +4,14 @@ import (
 	"fmt"
 )
 
+type withCoder interface {
+	WithCode(string) *baseError
+}
+
+type coder interface {
+	Code() string
+}
+
 type baseError struct {
 	msg      string
 	typ      string
@@ -13,17 +21,19 @@ type baseError struct {
 	producer *ErrorProducer
 }
 
+//nolint:errorlint
 func (b baseError) WithCode(code string) *baseError {
 	b.code = code
-	if coder, ok := b.origin.(interface{ WithCode(string) *baseError }); ok {
+	if coder, ok := b.origin.(withCoder); ok {
 		b.origin = coder.WithCode(code)
 	}
 
 	return &b
 }
 
+//nolint:errorlint
 func (b *baseError) Code() string {
-	if base, ok := b.origin.(interface{ Code() string }); ok {
+	if base, ok := b.origin.(coder); ok {
 		return base.Code()
 	}
 
@@ -44,6 +54,7 @@ func (b *baseError) getPrettyStack() string {
 	return result + space
 }
 
+//nolint:errorlint
 func (b *baseError) Error() string {
 	switch b.origin.(type) {
 	case *baseError:
@@ -56,6 +67,7 @@ func (b *baseError) Error() string {
 	}
 }
 
+//nolint:errorlint
 func (b *baseError) ErrorMessage() string {
 	switch b.origin.(type) {
 	case *baseError:

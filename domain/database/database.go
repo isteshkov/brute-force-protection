@@ -45,6 +45,7 @@ func (s *sqlDatabase) Begin() (tx *sql.Tx, err error) {
 	return
 }
 
+//nolint:sqlclosecheck
 func (s *sqlDatabase) Prepare(query string) (stmt *Stmt, err error) {
 	defer processError(&err)
 

@@ -27,6 +27,7 @@ func processError(errPtr *error) {
 	*errPtr = ErrorProducerGeneral.Wrap(err)
 }
 
+//nolint:errorlint
 func (s *Service) processRPCError(errPtr *error, errField *string) {
 	if errPtr == nil || *errPtr == nil {
 		return

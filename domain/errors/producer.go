@@ -12,6 +12,7 @@ func NewProducer(typ string) *ErrorProducer {
 	}
 }
 
+//nolint:errorlint
 func IsProducedBy(err error, reasons ...*ErrorProducer) bool {
 	base, ok := err.(*baseError)
 	if !ok {

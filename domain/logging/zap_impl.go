@@ -1,6 +1,7 @@
 package logging
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
@@ -8,6 +9,8 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
+
+var s stacktracer
 
 func NewLogger(c *Config) (Logger, error) {
 	conf := zap.NewProductionConfig()
@@ -134,7 +137,7 @@ func (l *logger) Error(err error) {
 	fields[FieldKeyLevel] = LevelError
 	fields[FieldKeyError] = err.Error()
 	fields[FieldKeyMessage] = "Error occurred: " + err.Error()
-	if s, ok := err.(stacktracer); ok {
+	if errors.As(err, &s) {
 		fields[FieldKeyStacktrace] = s.Stacktrace()
 	}
 
@@ -155,7 +158,7 @@ func (l *logger) ErrorF(err error, msg string, args ...interface{}) {
 	fields[FieldKeyLevel] = LevelError
 	fields[FieldKeyError] = err.Error()
 	fields[FieldKeyMessage] = "Error occurred: " + fmt.Sprintf(msg, args...)
-	if s, ok := err.(stacktracer); ok {
+	if errors.As(err, &s) {
 		fields[FieldKeyStacktrace] = s.Stacktrace()
 	}
 

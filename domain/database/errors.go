@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	stdErrors "errors"
 
 	"github.com/lib/pq"
 	"gitlab.com/isteshkov/brute-force-protection/domain/errors"
@@ -20,6 +21,7 @@ var ErrorsList = []*errors.ErrorProducer{
 	ErrorProducerAlreadyExist,
 }
 
+//nolint:errorlint
 func processError(errPtr *error) {
 	if errPtr == nil || *errPtr == nil {
 		return
@@ -39,7 +41,7 @@ func processError(errPtr *error) {
 		}
 	}
 
-	if err == sql.ErrNoRows {
+	if stdErrors.Is(err, sql.ErrNoRows) {
 		*errPtr = ErrorProducerDoesNotExist.Wrap(err, 1)
 		return
 	}

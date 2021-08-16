@@ -14,11 +14,16 @@ type Stmt struct {
 	query string
 }
 
+//nolint:sqlclosecheck
 func (s *Stmt) Query(args ...interface{}) (rows *Rows, err error) {
 	defer processError(&err)
 
 	tsBeforeRequest := time.Now().UTC()
 	sqlRows, err := s.stmt.Query(args...)
+	if err != nil || sqlRows.Err() != nil {
+		return
+	}
+
 	latency := math.Floor(time.Now().UTC().Sub(tsBeforeRequest).Seconds()*1000) / 1000
 	rows = &Rows{
 		rows: sqlRows,

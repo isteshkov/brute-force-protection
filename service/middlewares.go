@@ -65,7 +65,7 @@ func (s *Service) MiddlewareAccess(ctx context.Context, req interface{},
 }
 
 func (s *Service) RecoveryMiddleware(ctx context.Context, req interface{},
-	info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
+	handler grpc.UnaryHandler) (resp interface{}, err error) {
 	logger := s.Logger.WithFields(myContext.LogFieldsFromGrpcContext(ctx))
 	defer func() {
 		panicInfo := recover()
