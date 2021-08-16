@@ -51,7 +51,7 @@ func (s *Service) ListenAndServe() {
 	}
 
 	done := make(chan bool)
-	signals := make(chan os.Signal)
+	signals := make(chan os.Signal, 1)
 	signal.Notify(signals, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
 	go func() {
 		sig := <-signals
