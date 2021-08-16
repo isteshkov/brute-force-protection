@@ -73,7 +73,7 @@ func getStackTrace(lvl int) []string {
 	var result []string
 	lvl += 2
 	for {
-		pc, _, line, ok := runtime.Caller(lvl)
+		pc, _, _, ok := runtime.Caller(lvl)
 		if !ok {
 			return result
 		}
