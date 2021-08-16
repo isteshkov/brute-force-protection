@@ -78,7 +78,7 @@ func (s *Service) RemoveFromBlackList(ctx context.Context,
 	response = &contract.ResponseRemoveFromList{}
 	defer s.processRPCError(&err, &response.ErrorMsg)
 
-	err = s.removeSubnetFromBlacklist(request.SubnetAddress)
+	err = s.removeSubnetFromList(request.SubnetAddress)
 	if err != nil {
 		return
 	}
@@ -106,7 +106,7 @@ func (s *Service) RemoveFromWhiteList(ctx context.Context,
 	response = &contract.ResponseRemoveFromList{}
 	defer s.processRPCError(&err, &response.ErrorMsg)
 
-	err = s.removeSubnetFromWhitelist(request.SubnetAddress)
+	err = s.removeSubnetFromList(request.SubnetAddress)
 	if err != nil {
 		return
 	}
