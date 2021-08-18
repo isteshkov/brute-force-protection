@@ -18,7 +18,7 @@ build:
 
 .PHONY: test
 test:
-	go test -count=1 ./...
+	go test -race -count 100 ./...
 
 .PHONY: proto
 proto:

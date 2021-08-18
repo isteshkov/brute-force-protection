@@ -11,6 +11,7 @@ import (
 	"gitlab.com/isteshkov/brute-force-protection/migrations"
 	"gitlab.com/isteshkov/brute-force-protection/repositories"
 	"gitlab.com/isteshkov/brute-force-protection/service"
+	ratelimiter "gitlab.com/isteshkov/brute-force-protection/service/rate_limiter"
 )
 
 func main() {
@@ -55,12 +56,18 @@ func main() {
 	}
 
 	subnetsRepository := repositories.NewSubnetListRepository(db, logger)
+	rateLimiter := ratelimiter.NewRateLim(
+		cfg.LoginAttemptsPerMinuteCount,
+		cfg.PasswordAttemptsPerMinuteCount,
+		cfg.IPAttemptsPerMinuteCount,
+		logger,
+	)
 
 	server := service.NewService(&service.Config{
 		ProfilingAPIPort: cfg.ProfilingAPIPort,
 		TechnicalAPIPort: cfg.TechnicalAPIPort,
 		RPCPort:          cfg.RPCPort,
-	}, subnetsRepository, logger)
+	}, subnetsRepository, rateLimiter, logger)
 
 	server.ListenAndServe()
 }

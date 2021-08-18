@@ -15,7 +15,7 @@ type Subnets interface {
 	Set(subnet models.Subnet, withTx database.Transaction) (tx database.Transaction, err error)
 	SetDeleted(subnet models.Subnet, deletedAt time.Time, withTx database.Transaction) (tx database.Transaction, err error)
 
-	ByAddress(address string) (subnet models.Subnet, err error)
+	ByAddress(address string) (subnet *models.Subnet, err error)
 	Whitelist() (whitelist []models.Subnet, err error)
 	Blacklist() (blacklist []models.Subnet, err error)
 }
@@ -115,7 +115,7 @@ func (s subnetListRepository) SetDeleted(
 	return
 }
 
-func (s subnetListRepository) ByAddress(address string) (subnet models.Subnet, err error) {
+func (s subnetListRepository) ByAddress(address string) (subnet *models.Subnet, err error) {
 	defer processError(&err)
 
 	stmt, err := s.db.Prepare(`SELECT ` + subnetFields +
@@ -127,13 +127,14 @@ func (s subnetListRepository) ByAddress(address string) (subnet models.Subnet, e
 	}
 	defer database.CloseStmt(stmt, &err)
 
+	subnet = &models.Subnet{}
 	row := stmt.QueryRow(address)
 	err = row.Scan(
-		&subnet.Version,
-		&subnet.CreatedAt,
-		&subnet.UpdatedAt,
-		&subnet.Address,
-		&subnet.IsBlacklisted,
+		subnet.Version,
+		subnet.CreatedAt,
+		subnet.UpdatedAt,
+		subnet.Address,
+		subnet.IsBlacklisted,
 	)
 	if err != nil {
 		return

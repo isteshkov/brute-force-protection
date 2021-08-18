@@ -22,7 +22,7 @@ func (s *Service) AuthAttempt(ctx context.Context,
 	response = &contract.ResponseAuthAttempt{}
 	defer s.processRPCError(&err, &response.ErrorMsg)
 
-	err = s.authAttempt(request.Login, request.Password, request.IpAddress)
+	response.Allowed, err = s.authAttempt(request.Login, request.Password, request.IpAddress)
 	if err != nil {
 		return
 	}

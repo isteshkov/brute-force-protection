@@ -16,11 +16,12 @@ import (
 
 var errorProducer = errors.NewProducer("GENERAL_ERROR")
 
-func NewService(config *Config, subnetsRepo repositories.Subnets, l logging.Logger) *Service {
+func NewService(config *Config, subnetsRepo repositories.Subnets, rateLimiter RateLimiter, l logging.Logger) *Service {
 	service := &Service{
 		Logger:            l,
 		cfg:               config,
 		subnetsRepository: subnetsRepo,
+		rateLimiter:       rateLimiter,
 	}
 
 	service.rpcListener = newRPC(service)
@@ -37,6 +38,7 @@ type Service struct {
 	profilingAPI API
 
 	subnetsRepository repositories.Subnets
+	rateLimiter       RateLimiter
 }
 
 func (s *Service) SetLogger(l logging.Logger) {

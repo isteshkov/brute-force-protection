@@ -34,6 +34,10 @@ type Config struct {
 	ProfilingAPIPort string `env:"PROFILING_API_PORT"`
 	LogLevel         string `env:"LOG_LEVEL"`
 	DatabaseURL      string `env:"DATABASE_URL,required"`
+
+	LoginAttemptsPerMinuteCount    int `env:"LOGIN_ATTEMPTS_PER_MINUTE_COUNT" binding:"max=10"`
+	PasswordAttemptsPerMinuteCount int `env:"PASSWORD_ATTEMPTS_PER_MINUTE_COUNT" binding:"max=100"`
+	IPAttemptsPerMinuteCount       int `env:"IP_ATTEMPTS_PER_MINUTE_COUNT" binding:"max=1000"`
 }
 
 func LoadConfig(fileName string) (cfg *Config, err error) {
