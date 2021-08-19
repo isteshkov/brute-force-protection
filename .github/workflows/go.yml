@@ -37,6 +37,9 @@ jobs:
         with:
           go-version: 1.16
 
+      - name: Install task
+        run: go install github.com/go-task/task/v3/cmd/task@latest
+
       - name: Tests
         run: |
           task unit-test
@@ -52,6 +55,9 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: 1.16
+
+      - name: Install task
+        run: go install github.com/go-task/task/v3/cmd/task@latest
 
       - name: Build
         run: task build
