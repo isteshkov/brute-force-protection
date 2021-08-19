@@ -6,7 +6,7 @@ service Protector {
   rpc AuthAttempt(RequestAuthAttempt)returns(ResponseAuthAttempt){}
 
   rpc CleanBucketByLogin(RequestCleanBucketByLogin)returns(ResponseCleanBucketByLogin){}
-  rpc CleanBucketByIp(RequestCleanBucketByIp)returns(ResponseCleanBucketByIp){}
+  rpc CleanBucketByIP(RequestCleanBucketByIP)returns(ResponseCleanBucketByIP){}
 
   rpc AddToBlackList(RequestAddToList)returns(ResponseAddToList){}
   rpc RemoveFromBlackList(RequestRemoveFromList)returns(ResponseRemoveFromList){}
@@ -34,11 +34,11 @@ message ResponseCleanBucketByLogin {
   string ErrorMsg = 1;
 }
 
-message RequestCleanBucketByIp {
+message RequestCleanBucketByIP {
   string IpAddress = 1;
 }
 
-message ResponseCleanBucketByIp {
+message ResponseCleanBucketByIP {
   string ErrorMsg = 1;
 }
 

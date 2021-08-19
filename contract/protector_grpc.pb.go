@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type ProtectorClient interface {
 	AuthAttempt(ctx context.Context, in *RequestAuthAttempt, opts ...grpc.CallOption) (*ResponseAuthAttempt, error)
 	CleanBucketByLogin(ctx context.Context, in *RequestCleanBucketByLogin, opts ...grpc.CallOption) (*ResponseCleanBucketByLogin, error)
-	CleanBucketByIp(ctx context.Context, in *RequestCleanBucketByIp, opts ...grpc.CallOption) (*ResponseCleanBucketByIp, error)
+	CleanBucketByIP(ctx context.Context, in *RequestCleanBucketByIP, opts ...grpc.CallOption) (*ResponseCleanBucketByIP, error)
 	AddToBlackList(ctx context.Context, in *RequestAddToList, opts ...grpc.CallOption) (*ResponseAddToList, error)
 	RemoveFromBlackList(ctx context.Context, in *RequestRemoveFromList, opts ...grpc.CallOption) (*ResponseRemoveFromList, error)
 	AddToWhiteList(ctx context.Context, in *RequestAddToList, opts ...grpc.CallOption) (*ResponseAddToList, error)
@@ -53,8 +53,8 @@ func (c *protectorClient) CleanBucketByLogin(ctx context.Context, in *RequestCle
 	return out, nil
 }
 
-func (c *protectorClient) CleanBucketByIp(ctx context.Context, in *RequestCleanBucketByIp, opts ...grpc.CallOption) (*ResponseCleanBucketByIp, error) {
-	out := new(ResponseCleanBucketByIp)
+func (c *protectorClient) CleanBucketByIP(ctx context.Context, in *RequestCleanBucketByIP, opts ...grpc.CallOption) (*ResponseCleanBucketByIP, error) {
+	out := new(ResponseCleanBucketByIP)
 	err := c.cc.Invoke(ctx, "/contract.Protector/CleanBucketByIP", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -104,7 +104,7 @@ func (c *protectorClient) RemoveFromWhiteList(ctx context.Context, in *RequestRe
 type ProtectorServer interface {
 	AuthAttempt(context.Context, *RequestAuthAttempt) (*ResponseAuthAttempt, error)
 	CleanBucketByLogin(context.Context, *RequestCleanBucketByLogin) (*ResponseCleanBucketByLogin, error)
-	CleanBucketByIP(context.Context, *RequestCleanBucketByIp) (*ResponseCleanBucketByIp, error)
+	CleanBucketByIP(context.Context, *RequestCleanBucketByIP) (*ResponseCleanBucketByIP, error)
 	AddToBlackList(context.Context, *RequestAddToList) (*ResponseAddToList, error)
 	RemoveFromBlackList(context.Context, *RequestRemoveFromList) (*ResponseRemoveFromList, error)
 	AddToWhiteList(context.Context, *RequestAddToList) (*ResponseAddToList, error)
@@ -121,7 +121,7 @@ func (UnimplementedProtectorServer) AuthAttempt(context.Context, *RequestAuthAtt
 func (UnimplementedProtectorServer) CleanBucketByLogin(context.Context, *RequestCleanBucketByLogin) (*ResponseCleanBucketByLogin, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CleanBucketByLogin not implemented")
 }
-func (UnimplementedProtectorServer) CleanBucketByIP(context.Context, *RequestCleanBucketByIp) (*ResponseCleanBucketByIp, error) {
+func (UnimplementedProtectorServer) CleanBucketByIP(context.Context, *RequestCleanBucketByIP) (*ResponseCleanBucketByIP, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CleanBucketByIP not implemented")
 }
 func (UnimplementedProtectorServer) AddToBlackList(context.Context, *RequestAddToList) (*ResponseAddToList, error) {
@@ -184,8 +184,8 @@ func _Protector_CleanBucketByLogin_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Protector_CleanBucketByIp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestCleanBucketByIp)
+func _Protector_CleanBucketByIP_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestCleanBucketByIP)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -197,7 +197,7 @@ func _Protector_CleanBucketByIp_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: "/contract.Protector/CleanBucketByIP",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProtectorServer).CleanBucketByIP(ctx, req.(*RequestCleanBucketByIp))
+		return srv.(ProtectorServer).CleanBucketByIP(ctx, req.(*RequestCleanBucketByIP))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -291,7 +291,7 @@ var Protector_ServiceDesc = grpc.ServiceDesc{
 		},
 		{
 			MethodName: "CleanBucketByIP",
-			Handler:    _Protector_CleanBucketByIp_Handler,
+			Handler:    _Protector_CleanBucketByIP_Handler,
 		},
 		{
 			MethodName: "AddToBlackList",

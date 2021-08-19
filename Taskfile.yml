@@ -1,0 +1,54 @@
+---
+
+version: '2'
+
+tasks:
+  test:
+    desc: |
+      Run integration tests
+    dir: testing
+    cmds:
+      - sudo docker-compose up --build --force-recreate -V --exit-code-from=testing --abort-on-container-exit testing brute-force-protection
+      - sudo docker-compose down -v
+
+  test-no-logs:
+    desc: |
+      Run integration tests (clean mode)
+    dir: testing
+    cmds:
+      - docker-compose up --build --force-recreate -V -d postgres brute-force-protection
+      - docker-compose up --build --force-recreate -V --exit-code-from=testing --abort-on-container-exit testing
+      #- docker-compose down -v
+
+  unit-test:
+    desc: |
+      Run unit tests
+    cmds:
+      - go test -mod vendor -race -count 100 $(go list ./... | grep -v /testing)
+
+  run:
+    desc: Run local
+    cmds:
+      - sudo docker-compose up --build --force-recreate -V
+
+  lint:
+    desc: Run linters
+    cmds:
+      - go get -u golang.org/x/lint/golint
+      - golangci-lint run
+
+  build:
+    desc: Build service
+    cmds:
+      - go build -o brute_force_protection .
+
+  deps:
+    desc: Build dependences
+    cmds:
+      - go mod tidy
+      - go mod vendor
+
+  proto:
+    desc: Generate proto files
+    cmds:
+      - protoc --go_out=./contract/ --go-grpc_out=./contract/ --go-grpc_opt=require_unimplemented_servers=false --experimental_allow_proto3_optional ./contract/*.proto

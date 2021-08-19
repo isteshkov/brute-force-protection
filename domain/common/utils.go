@@ -1,38 +1,16 @@
 package common
 
 import (
+	"math/rand"
+	"time"
+
 	uuid "github.com/satori/go.uuid"
 )
 
+var letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+
 func NewUUIDv4() string {
 	return uuid.NewV4().String()
-}
-
-func KeysFromStringBoolMap(data map[string]bool) []string {
-	result := make([]string, 0, len(data))
-	for key := range data {
-		result = append(result, key)
-	}
-
-	return result
-}
-
-func KeysFromStringMap(data map[string]string) []string {
-	result := make([]string, 0, len(data))
-	for key := range data {
-		result = append(result, key)
-	}
-
-	return result
-}
-
-func ValuesFromStringMap(data map[string]string) []string {
-	result := make([]string, 0, len(data))
-	for _, value := range data {
-		result = append(result, value)
-	}
-
-	return result
 }
 
 func CopyStringInterfaceMap(source map[string]interface{}) map[string]interface{} {
@@ -44,20 +22,17 @@ func CopyStringInterfaceMap(source map[string]interface{}) map[string]interface{
 	return result
 }
 
-func RemoveFromStringsSlice(s []string, elem string) []string {
-	for i, v := range s {
-		if v == elem {
-			return append(s[:i], s[i+1:]...)
-		}
-	}
-	return s
+//nolint:gosec
+func RandInt(min int, max int) int {
+	rand.Seed(time.Now().UTC().UnixNano())
+	return min + rand.Intn(max-min)
 }
 
-func NonexistentStringsInMapStringStruct(source []string, searchMap map[string]struct{}) (nonexistent []string) {
-	for i := range source {
-		if _, ok := searchMap[source[i]]; !ok {
-			nonexistent = append(nonexistent, source[i])
-		}
+func RandString(length int) (result string) {
+	var bytes []byte
+	for i := 0; i < length; i++ {
+		bytes = append(bytes, letters[RandInt(0, len(letters))])
 	}
-	return
+
+	return string(bytes)
 }

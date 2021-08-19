@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  testing:
+    image: golang:1.16-buster
+    volumes:
+      - ../:/brute-force-protection:ro
+    working_dir: /brute-force-protection/testing
+    entrypoint: bash -c '
+      until `((echo > /dev/tcp/brute-force-protection/8021) >/dev/null 2>&1)`; do sleep 1; done &&
+      go test -mod vendor -race -v .'
+    environment:
+      SERVICE_URL: brute-force-protection:9003
+      DB_CONNECTION_STRING: postgresql://postgres:password@postgres:5432/postgres?sslmode=disable
+    depends_on:
+      - brute-force-protection
+      - postgres
+
+
+  brute-force-protection:
+    build:
+      context: ..
+      dockerfile: ./Dockerfile
+    ports:
+      - 9003:9003
+    depends_on:
+      - postgres
+    entrypoint: bash -c '
+      until `((echo > /dev/tcp/postgres/5432) >/dev/null 2>&1)`; do sleep 1; done &&
+      ./brute_force_protection ./testing/.env migrate && ./brute_force_protection ./testing/.env'
+
+  postgres:
+    image: postgres:buster
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - 2345:5432

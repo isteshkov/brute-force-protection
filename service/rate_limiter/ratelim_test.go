@@ -2,15 +2,12 @@ package ratelimiter
 
 import (
 	"fmt"
-	"math/rand"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
+	"gitlab.com/isteshkov/brute-force-protection/domain/common"
 	"gitlab.com/isteshkov/brute-force-protection/domain/logging"
 )
-
-var letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
 
 func TestRateLim_AttemptByIP(t *testing.T) {
 	logger, err := logging.NewLogger(&logging.Config{})
@@ -57,7 +54,7 @@ func TestRateLim_AttemptByLogin(t *testing.T) {
 	maxLoginAttempts := 5
 	rateLim := NewRateLim(maxLoginAttempts, 1, 1, logger)
 
-	login := randString(15)
+	login := common.RandString(15)
 
 	allow := rateLim.AttemptByLogin(login)
 	assert.True(t, allow)
@@ -95,7 +92,7 @@ func TestRateLim_AttemptByPassword(t *testing.T) {
 	maxPasswordAttempts := 5
 	rateLim := NewRateLim(1, maxPasswordAttempts, 1, logger)
 
-	password := randString(50)
+	password := common.RandString(50)
 
 	allow := rateLim.AttemptByPassword(password)
 	assert.True(t, allow)
@@ -176,24 +173,9 @@ func TestRateLim_CleanBucketByLogin(t *testing.T) {
 
 func RandomIP() string {
 	return fmt.Sprintf("%d.%d.%d.%d/%d",
-		randInt(192, 198),
-		randInt(128, 191),
-		randInt(10, 50),
-		randInt(0, 254),
-		randInt(18, 24))
-}
-
-//nolint:gosec
-func randInt(min int, max int) int {
-	rand.Seed(time.Now().UTC().UnixNano())
-	return min + rand.Intn(max-min)
-}
-
-func randString(length int) (result string) {
-	var bytes []byte
-	for i := 0; i < length; i++ {
-		bytes = append(bytes, letters[randInt(0, len(letters))])
-	}
-
-	return string(bytes)
+		common.RandInt(192, 198),
+		common.RandInt(128, 191),
+		common.RandInt(10, 50),
+		common.RandInt(0, 254),
+		common.RandInt(18, 24))
 }

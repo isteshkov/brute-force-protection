@@ -35,22 +35,19 @@ type Config struct {
 	LogLevel         string `env:"LOG_LEVEL"`
 	DatabaseURL      string `env:"DATABASE_URL,required"`
 
-	LoginAttemptsPerMinuteCount    int `env:"LOGIN_ATTEMPTS_PER_MINUTE_COUNT" binding:"max=10"`
-	PasswordAttemptsPerMinuteCount int `env:"PASSWORD_ATTEMPTS_PER_MINUTE_COUNT" binding:"max=100"`
-	IPAttemptsPerMinuteCount       int `env:"IP_ATTEMPTS_PER_MINUTE_COUNT" binding:"max=1000"`
+	LoginAttemptsPerMinuteCount    int `env:"LOGIN_ATTEMPTS_PER_MINUTE_COUNT,required" binding:"max=10"`
+	PasswordAttemptsPerMinuteCount int `env:"PASSWORD_ATTEMPTS_PER_MINUTE_COUNT,required" binding:"max=100"`
+	IPAttemptsPerMinuteCount       int `env:"IP_ATTEMPTS_PER_MINUTE_COUNT,required" binding:"max=1000"`
 }
 
 func LoadConfig(fileName string) (cfg *Config, err error) {
-	cfg = &Config{}
-
 	if len(fileName) > 0 {
-		err = loadEnvFromFile(fileName)
-		if err != nil {
-			err = env.Parse(cfg)
-			if err != nil {
-				return
-			}
-		}
+		_ = loadEnvFromFile(fileName)
+	}
+	cfg = &Config{}
+	err = env.Parse(cfg)
+	if err != nil {
+		return
 	}
 
 	fillDefault(cfg)

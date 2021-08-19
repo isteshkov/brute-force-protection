@@ -45,9 +45,9 @@ func (s *Service) CleanBucketByLogin(ctx context.Context,
 }
 
 func (s *Service) CleanBucketByIP(ctx context.Context,
-	request *contract.RequestCleanBucketByIp) (response *contract.ResponseCleanBucketByIp, err error) {
+	request *contract.RequestCleanBucketByIP) (response *contract.ResponseCleanBucketByIP, err error) {
 	s.SetLogger(s.Logger.WithFields(myContext.LogFieldsFromGrpcContext(ctx)))
-	response = &contract.ResponseCleanBucketByIp{}
+	response = &contract.ResponseCleanBucketByIP{}
 	defer s.processRPCError(&err, &response.ErrorMsg)
 
 	err = s.cleanBucketByIP(request.IpAddress)

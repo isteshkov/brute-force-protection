@@ -15,9 +15,7 @@ type Subnets interface {
 	Set(subnet models.Subnet, withTx database.Transaction) (tx database.Transaction, err error)
 	SetDeleted(subnet models.Subnet, deletedAt time.Time, withTx database.Transaction) (tx database.Transaction, err error)
 
-	ByAddress(address string) (subnet *models.Subnet, err error)
-	Whitelist() (whitelist []models.Subnet, err error)
-	Blacklist() (blacklist []models.Subnet, err error)
+	ByAddress(address string) (subnet models.Subnet, err error)
 }
 
 const subnetFields = `
@@ -115,7 +113,7 @@ func (s subnetListRepository) SetDeleted(
 	return
 }
 
-func (s subnetListRepository) ByAddress(address string) (subnet *models.Subnet, err error) {
+func (s subnetListRepository) ByAddress(address string) (subnet models.Subnet, err error) {
 	defer processError(&err)
 
 	stmt, err := s.db.Prepare(`SELECT ` + subnetFields +
@@ -127,89 +125,17 @@ func (s subnetListRepository) ByAddress(address string) (subnet *models.Subnet, 
 	}
 	defer database.CloseStmt(stmt, &err)
 
-	subnet = &models.Subnet{}
+	subnet = models.Subnet{}
 	row := stmt.QueryRow(address)
 	err = row.Scan(
-		subnet.Version,
-		subnet.CreatedAt,
-		subnet.UpdatedAt,
-		subnet.Address,
-		subnet.IsBlacklisted,
+		&subnet.Version,
+		&subnet.CreatedAt,
+		&subnet.UpdatedAt,
+		&subnet.Address,
+		&subnet.IsBlacklisted,
 	)
 	if err != nil {
 		return
-	}
-
-	return
-}
-
-func (s subnetListRepository) Whitelist() (whitelist []models.Subnet, err error) {
-	defer processError(&err)
-
-	stmt, err := s.db.Prepare(`SELECT ` + subnetFields +
-		` FROM subnets WHERE is_blacklisted = false AND deleted_at IS NULL;`)
-	if err != nil {
-		database.CloseStmt(stmt, &err)
-		return
-	}
-
-	rows, err := stmt.Query()
-	if err != nil {
-		database.CloseConnections(stmt, rows, &err)
-		return
-	}
-	defer database.CloseConnections(stmt, rows, &err)
-
-	for rows.Next() {
-		var subnet models.Subnet
-		err = rows.Scan(
-			&subnet.Version,
-			&subnet.CreatedAt,
-			&subnet.UpdatedAt,
-			&subnet.Address,
-			&subnet.IsBlacklisted,
-		)
-		if err != nil {
-			return
-		}
-
-		whitelist = append(whitelist, subnet)
-	}
-
-	return
-}
-
-func (s subnetListRepository) Blacklist() (blacklist []models.Subnet, err error) {
-	defer processError(&err)
-
-	stmt, err := s.db.Prepare(`SELECT ` + subnetFields +
-		` FROM subnets WHERE is_blacklisted = true AND deleted_at IS NULL;`)
-	if err != nil {
-		database.CloseStmt(stmt, &err)
-		return
-	}
-
-	rows, err := stmt.Query()
-	if err != nil {
-		database.CloseConnections(stmt, rows, &err)
-		return
-	}
-	defer database.CloseConnections(stmt, rows, &err)
-
-	for rows.Next() {
-		var subnet models.Subnet
-		err = rows.Scan(
-			&subnet.Version,
-			&subnet.CreatedAt,
-			&subnet.UpdatedAt,
-			&subnet.Address,
-			&subnet.IsBlacklisted,
-		)
-		if err != nil {
-			return
-		}
-
-		blacklist = append(blacklist, subnet)
 	}
 
 	return

@@ -232,7 +232,7 @@ func (x *ResponseCleanBucketByLogin) GetErrorMsg() string {
 	return ""
 }
 
-type RequestCleanBucketByIp struct {
+type RequestCleanBucketByIP struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -240,8 +240,8 @@ type RequestCleanBucketByIp struct {
 	IpAddress string `protobuf:"bytes,1,opt,name=IpAddress,proto3" json:"IpAddress,omitempty"`
 }
 
-func (x *RequestCleanBucketByIp) Reset() {
-	*x = RequestCleanBucketByIp{}
+func (x *RequestCleanBucketByIP) Reset() {
+	*x = RequestCleanBucketByIP{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_contract_protector_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -249,13 +249,13 @@ func (x *RequestCleanBucketByIp) Reset() {
 	}
 }
 
-func (x *RequestCleanBucketByIp) String() string {
+func (x *RequestCleanBucketByIP) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RequestCleanBucketByIp) ProtoMessage() {}
+func (*RequestCleanBucketByIP) ProtoMessage() {}
 
-func (x *RequestCleanBucketByIp) ProtoReflect() protoreflect.Message {
+func (x *RequestCleanBucketByIP) ProtoReflect() protoreflect.Message {
 	mi := &file_contract_protector_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -267,19 +267,19 @@ func (x *RequestCleanBucketByIp) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RequestCleanBucketByIp.ProtoReflect.Descriptor instead.
-func (*RequestCleanBucketByIp) Descriptor() ([]byte, []int) {
+// Deprecated: Use RequestCleanBucketByIP.ProtoReflect.Descriptor instead.
+func (*RequestCleanBucketByIP) Descriptor() ([]byte, []int) {
 	return file_contract_protector_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *RequestCleanBucketByIp) GetIpAddress() string {
+func (x *RequestCleanBucketByIP) GetIpAddress() string {
 	if x != nil {
 		return x.IpAddress
 	}
 	return ""
 }
 
-type ResponseCleanBucketByIp struct {
+type ResponseCleanBucketByIP struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -287,8 +287,8 @@ type ResponseCleanBucketByIp struct {
 	ErrorMsg string `protobuf:"bytes,1,opt,name=ErrorMsg,proto3" json:"ErrorMsg,omitempty"`
 }
 
-func (x *ResponseCleanBucketByIp) Reset() {
-	*x = ResponseCleanBucketByIp{}
+func (x *ResponseCleanBucketByIP) Reset() {
+	*x = ResponseCleanBucketByIP{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_contract_protector_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -296,13 +296,13 @@ func (x *ResponseCleanBucketByIp) Reset() {
 	}
 }
 
-func (x *ResponseCleanBucketByIp) String() string {
+func (x *ResponseCleanBucketByIP) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ResponseCleanBucketByIp) ProtoMessage() {}
+func (*ResponseCleanBucketByIP) ProtoMessage() {}
 
-func (x *ResponseCleanBucketByIp) ProtoReflect() protoreflect.Message {
+func (x *ResponseCleanBucketByIP) ProtoReflect() protoreflect.Message {
 	mi := &file_contract_protector_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -314,12 +314,12 @@ func (x *ResponseCleanBucketByIp) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ResponseCleanBucketByIp.ProtoReflect.Descriptor instead.
-func (*ResponseCleanBucketByIp) Descriptor() ([]byte, []int) {
+// Deprecated: Use ResponseCleanBucketByIP.ProtoReflect.Descriptor instead.
+func (*ResponseCleanBucketByIP) Descriptor() ([]byte, []int) {
 	return file_contract_protector_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *ResponseCleanBucketByIp) GetErrorMsg() string {
+func (x *ResponseCleanBucketByIP) GetErrorMsg() string {
 	if x != nil {
 		return x.ErrorMsg
 	}
@@ -538,11 +538,11 @@ var file_contract_protector_proto_rawDesc = []byte{
 	0x74, 0x42, 0x79, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x12, 0x1a, 0x0a, 0x08, 0x45, 0x72, 0x72, 0x6f,
 	0x72, 0x4d, 0x73, 0x67, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x45, 0x72, 0x72, 0x6f,
 	0x72, 0x4d, 0x73, 0x67, 0x22, 0x36, 0x0a, 0x16, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x43,
-	0x6c, 0x65, 0x61, 0x6e, 0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x42, 0x79, 0x49, 0x70, 0x12, 0x1c,
+	0x6c, 0x65, 0x61, 0x6e, 0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x42, 0x79, 0x49, 0x50, 0x12, 0x1c,
 	0x0a, 0x09, 0x49, 0x70, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28,
 	0x09, 0x52, 0x09, 0x49, 0x70, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x35, 0x0a, 0x17,
 	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x43, 0x6c, 0x65, 0x61, 0x6e, 0x42, 0x75, 0x63,
-	0x6b, 0x65, 0x74, 0x42, 0x79, 0x49, 0x70, 0x12, 0x1a, 0x0a, 0x08, 0x45, 0x72, 0x72, 0x6f, 0x72,
+	0x6b, 0x65, 0x74, 0x42, 0x79, 0x49, 0x50, 0x12, 0x1a, 0x0a, 0x08, 0x45, 0x72, 0x72, 0x6f, 0x72,
 	0x4d, 0x73, 0x67, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x45, 0x72, 0x72, 0x6f, 0x72,
 	0x4d, 0x73, 0x67, 0x22, 0x38, 0x0a, 0x10, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x41, 0x64,
 	0x64, 0x54, 0x6f, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x24, 0x0a, 0x0d, 0x53, 0x75, 0x62, 0x6e, 0x65,
@@ -571,11 +571,11 @@ var file_contract_protector_proto_rawDesc = []byte{
 	0x74, 0x72, 0x61, 0x63, 0x74, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x43, 0x6c,
 	0x65, 0x61, 0x6e, 0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x42, 0x79, 0x4c, 0x6f, 0x67, 0x69, 0x6e,
 	0x22, 0x00, 0x12, 0x58, 0x0a, 0x0f, 0x43, 0x6c, 0x65, 0x61, 0x6e, 0x42, 0x75, 0x63, 0x6b, 0x65,
-	0x74, 0x42, 0x79, 0x49, 0x70, 0x12, 0x20, 0x2e, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74,
+	0x74, 0x42, 0x79, 0x49, 0x50, 0x12, 0x20, 0x2e, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74,
 	0x2e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x43, 0x6c, 0x65, 0x61, 0x6e, 0x42, 0x75, 0x63,
-	0x6b, 0x65, 0x74, 0x42, 0x79, 0x49, 0x70, 0x1a, 0x21, 0x2e, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61,
+	0x6b, 0x65, 0x74, 0x42, 0x79, 0x49, 0x50, 0x1a, 0x21, 0x2e, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61,
 	0x63, 0x74, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x43, 0x6c, 0x65, 0x61, 0x6e,
-	0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x42, 0x79, 0x49, 0x70, 0x22, 0x00, 0x12, 0x4b, 0x0a, 0x0e,
+	0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x42, 0x79, 0x49, 0x50, 0x22, 0x00, 0x12, 0x4b, 0x0a, 0x0e,
 	0x41, 0x64, 0x64, 0x54, 0x6f, 0x42, 0x6c, 0x61, 0x63, 0x6b, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x1a,
 	0x2e, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x2e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
 	0x74, 0x41, 0x64, 0x64, 0x54, 0x6f, 0x4c, 0x69, 0x73, 0x74, 0x1a, 0x1b, 0x2e, 0x63, 0x6f, 0x6e,
@@ -619,8 +619,8 @@ var file_contract_protector_proto_goTypes = []interface{}{
 	(*ResponseAuthAttempt)(nil),        // 1: contract.ResponseAuthAttempt
 	(*RequestCleanBucketByLogin)(nil),  // 2: contract.RequestCleanBucketByLogin
 	(*ResponseCleanBucketByLogin)(nil), // 3: contract.ResponseCleanBucketByLogin
-	(*RequestCleanBucketByIp)(nil),     // 4: contract.RequestCleanBucketByIp
-	(*ResponseCleanBucketByIp)(nil),    // 5: contract.ResponseCleanBucketByIp
+	(*RequestCleanBucketByIP)(nil),     // 4: contract.RequestCleanBucketByIP
+	(*ResponseCleanBucketByIP)(nil),    // 5: contract.ResponseCleanBucketByIP
 	(*RequestAddToList)(nil),           // 6: contract.RequestAddToList
 	(*ResponseAddToList)(nil),          // 7: contract.ResponseAddToList
 	(*RequestRemoveFromList)(nil),      // 8: contract.RequestRemoveFromList
@@ -629,14 +629,14 @@ var file_contract_protector_proto_goTypes = []interface{}{
 var file_contract_protector_proto_depIdxs = []int32{
 	0, // 0: contract.Protector.AuthAttempt:input_type -> contract.RequestAuthAttempt
 	2, // 1: contract.Protector.CleanBucketByLogin:input_type -> contract.RequestCleanBucketByLogin
-	4, // 2: contract.Protector.CleanBucketByIP:input_type -> contract.RequestCleanBucketByIp
+	4, // 2: contract.Protector.CleanBucketByIP:input_type -> contract.RequestCleanBucketByIP
 	6, // 3: contract.Protector.AddToBlackList:input_type -> contract.RequestAddToList
 	8, // 4: contract.Protector.RemoveFromBlackList:input_type -> contract.RequestRemoveFromList
 	6, // 5: contract.Protector.AddToWhiteList:input_type -> contract.RequestAddToList
 	8, // 6: contract.Protector.RemoveFromWhiteList:input_type -> contract.RequestRemoveFromList
 	1, // 7: contract.Protector.AuthAttempt:output_type -> contract.ResponseAuthAttempt
 	3, // 8: contract.Protector.CleanBucketByLogin:output_type -> contract.ResponseCleanBucketByLogin
-	5, // 9: contract.Protector.CleanBucketByIP:output_type -> contract.ResponseCleanBucketByIp
+	5, // 9: contract.Protector.CleanBucketByIP:output_type -> contract.ResponseCleanBucketByIP
 	7, // 10: contract.Protector.AddToBlackList:output_type -> contract.ResponseAddToList
 	9, // 11: contract.Protector.RemoveFromBlackList:output_type -> contract.ResponseRemoveFromList
 	7, // 12: contract.Protector.AddToWhiteList:output_type -> contract.ResponseAddToList
@@ -703,7 +703,7 @@ func file_contract_protector_proto_init() {
 			}
 		}
 		file_contract_protector_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RequestCleanBucketByIp); i {
+			switch v := v.(*RequestCleanBucketByIP); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -715,7 +715,7 @@ func file_contract_protector_proto_init() {
 			}
 		}
 		file_contract_protector_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ResponseCleanBucketByIp); i {
+			switch v := v.(*ResponseCleanBucketByIP); i {
 			case 0:
 				return &v.state
 			case 1:
